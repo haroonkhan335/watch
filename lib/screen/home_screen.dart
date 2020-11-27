@@ -19,17 +19,26 @@ class MyHome extends StatelessWidget {
 //          elevation: 0,
 //          automaticallyImplyLeading: false,
 //      ),
-      body:  ListView.builder(
-        scrollDirection: Axis.vertical,
+        body: Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: ListView.builder(
+          scrollDirection: Axis.vertical,
 //        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        itemCount: itemData.length,
-        itemBuilder: (context, index) => _MyListItem(index))
-    );
+          itemCount: itemData.length,
+          itemBuilder: (context, index) => _MyListItem(index)),
+    ));
   }
 }
 
-Icon iconNotFavorite = Icon(Icons.favorite_border, size: 32,);
-Icon iconInFavorite = Icon(Icons.favorite, size: 32,);
+Icon iconNotFavorite = Icon(
+  Icons.favorite_border,
+  size: 32,
+);
+Icon iconInFavorite = Icon(
+  Icons.favorite,
+  size: 32,
+);
 
 class _AddButton extends StatelessWidget {
   final Item item;
@@ -54,7 +63,6 @@ class _AddButton extends StatelessWidget {
   }
 }
 
-
 // List Items
 class _MyListItem extends StatelessWidget {
   final int index;
@@ -64,22 +72,25 @@ class _MyListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var item = context.select<HomeModel, Item>(
-
       (catalog) => catalog.getByPosition(index),
     );
 
-    return Container(
-      height: 75,
-      child: ListTile(
-        leading:CachedNetworkImage(
-                  imageUrl: itemData[index].imageURL,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
-        title:  Text(itemData[index].title, style: kItemTitle,),
-        subtitle: Text(itemData[index].description, style: kItemDescription,),
-        trailing: _AddButton(item: item),
+    return ListTile(
+      leading: CachedNetworkImage(
+        height: 75,
+        width: 75,
+        imageUrl: itemData[index].imageURL,
+        fit: BoxFit.cover,
       ),
+      title: Text(
+        itemData[index].title,
+        style: kItemTitle,
+      ),
+      subtitle: Text(
+        itemData[index].description,
+        style: kItemDescription,
+      ),
+      trailing: _AddButton(item: item),
     );
 
 //    return Container(
